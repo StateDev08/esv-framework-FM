@@ -2,7 +2,7 @@ local isOpen = false
 local charCam = nil
 local charPed = nil
 
-AddEventHandler('esv:client:playerReady', function()
+RegisterNetEvent('esv:client:playerReady', function()
     Wait(500)
     OpenMultichar()
 end)
