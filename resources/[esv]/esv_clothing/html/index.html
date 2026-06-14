@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ESV Kleidung</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="clothing-container" class="hidden">
+        <div class="clothing-panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fas fa-tshirt"></i> KLEIDUNG</div>
+                <button class="close-btn" onclick="closeClothing()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="clothing-categories" id="clothing-categories"></div>
+            <div class="controls" id="controls"></div>
+            <div class="panel-footer">
+                <button class="btn-save" onclick="saveOutfit()"><i class="fas fa-save"></i> SPEICHERN</button>
+                <button class="btn-reset" onclick="resetOutfit()"><i class="fas fa-undo"></i> ZURUECKSETZEN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

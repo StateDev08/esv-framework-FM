@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ESV HUD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="hud-container" class="hidden">
+        <div class="hud-bars">
+            <div class="hud-bar" id="health-bar">
+                <div class="bar-icon"><i class="fas fa-heart"></i></div>
+                <div class="bar-track"><div class="bar-fill" id="health-fill"></div></div>
+            </div>
+            <div class="hud-bar" id="armor-bar">
+                <div class="bar-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="bar-track"><div class="bar-fill" id="armor-fill"></div></div>
+            </div>
+            <div class="hud-bar" id="hunger-bar">
+                <div class="bar-icon"><i class="fas fa-utensils"></i></div>
+                <div class="bar-track"><div class="bar-fill" id="hunger-fill"></div></div>
+            </div>
+            <div class="hud-bar" id="thirst-bar">
+                <div class="bar-icon"><i class="fas fa-tint"></i></div>
+                <div class="bar-track"><div class="bar-fill" id="thirst-fill"></div></div>
+            </div>
+            <div class="hud-bar" id="stress-bar">
+                <div class="bar-icon"><i class="fas fa-brain"></i></div>
+                <div class="bar-track"><div class="bar-fill" id="stress-fill"></div></div>
+            </div>
+            <div class="hud-bar" id="voice-bar">
+                <div class="bar-icon"><i class="fas fa-microphone" id="voice-icon"></i></div>
+            </div>
+        </div>
+
+        <div class="money-display">
+            <div class="money-row cash">
+                <i class="fas fa-wallet"></i>
+                <span id="cash-amount">$0</span>
+            </div>
+            <div class="money-row bank">
+                <i class="fas fa-university"></i>
+                <span id="bank-amount">$0</span>
+            </div>
+        </div>
+
+        <div id="vehicle-hud" class="hidden">
+            <div class="vehicle-info">
+                <div class="speed-display">
+                    <span id="speed-value">0</span>
+                    <span class="speed-unit">KM/H</span>
+                </div>
+                <div class="fuel-display">
+                    <i class="fas fa-gas-pump"></i>
+                    <div class="fuel-track"><div class="fuel-fill" id="fuel-fill"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

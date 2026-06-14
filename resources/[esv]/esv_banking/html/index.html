@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ESV Bank</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="bank-container" class="hidden">
+        <div class="bank-panel">
+            <div class="bank-header">
+                <div class="bank-logo"><i class="fas fa-university"></i> FLEECA BANK</div>
+                <div class="account-nr" id="account-nr"></div>
+                <button class="close-btn" onclick="closeBank()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="bank-balance">
+                <div class="balance-item">
+                    <span class="balance-label">Kontostand</span>
+                    <span class="balance-value bank-color" id="bank-balance">$0</span>
+                </div>
+                <div class="balance-item">
+                    <span class="balance-label">Bargeld</span>
+                    <span class="balance-value cash-color" id="cash-balance">$0</span>
+                </div>
+            </div>
+
+            <div class="bank-tabs">
+                <button class="tab active" onclick="switchTab('deposit')">Einzahlen</button>
+                <button class="tab" onclick="switchTab('withdraw')">Abheben</button>
+                <button class="tab" onclick="switchTab('transfer')">Ueberweisen</button>
+                <button class="tab" onclick="switchTab('history')">Verlauf</button>
+            </div>
+
+            <div class="tab-content" id="tab-deposit">
+                <div class="form-group">
+                    <label>Betrag</label>
+                    <input type="number" id="deposit-amount" placeholder="Betrag eingeben" min="1">
+                </div>
+                <button class="btn btn-action" onclick="doDeposit()"><i class="fas fa-arrow-down"></i> EINZAHLEN</button>
+            </div>
+
+            <div class="tab-content hidden" id="tab-withdraw">
+                <div class="form-group">
+                    <label>Betrag</label>
+                    <input type="number" id="withdraw-amount" placeholder="Betrag eingeben" min="1">
+                </div>
+                <button class="btn btn-action" onclick="doWithdraw()"><i class="fas fa-arrow-up"></i> ABHEBEN</button>
+            </div>
+
+            <div class="tab-content hidden" id="tab-transfer">
+                <div class="form-group">
+                    <label>Empfaenger-Kontonummer</label>
+                    <input type="text" id="transfer-account" placeholder="DE...">
+                </div>
+                <div class="form-group">
+                    <label>Betrag</label>
+                    <input type="number" id="transfer-amount" placeholder="Betrag eingeben" min="1">
+                </div>
+                <button class="btn btn-action" onclick="doTransfer()"><i class="fas fa-exchange-alt"></i> UEBERWEISEN</button>
+            </div>
+
+            <div class="tab-content hidden" id="tab-history">
+                <div class="transaction-list" id="transaction-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

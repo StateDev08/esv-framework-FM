@@ -1,0 +1,158 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: transparent;
+    overflow: hidden;
+    color: #fff;
+}
+
+.hidden { display: none !important; }
+
+#hud-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.hud-bars {
+    position: fixed;
+    bottom: 30px;
+    left: 180px;
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+}
+
+.hud-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.bar-icon {
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+}
+
+#health-bar .bar-icon { color: #e74c3c; }
+#armor-bar .bar-icon { color: #3498db; }
+#hunger-bar .bar-icon { color: #f39c12; }
+#thirst-bar .bar-icon { color: #2ecc71; }
+#stress-bar .bar-icon { color: #9b59b6; }
+#voice-bar .bar-icon { color: #ecf0f1; }
+
+.bar-track {
+    width: 6px;
+    height: 50px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bar-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 3px;
+    transition: height 0.3s ease;
+}
+
+#health-fill { background: linear-gradient(to top, #c0392b, #e74c3c); height: 100%; }
+#armor-fill { background: linear-gradient(to top, #2980b9, #3498db); height: 0%; }
+#hunger-fill { background: linear-gradient(to top, #d35400, #f39c12); height: 100%; }
+#thirst-fill { background: linear-gradient(to top, #27ae60, #2ecc71); height: 100%; }
+#stress-fill { background: linear-gradient(to top, #8e44ad, #9b59b6); height: 0%; }
+
+.money-display {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+}
+
+.money-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    justify-content: flex-end;
+}
+
+.money-row.cash { color: #2ecc71; }
+.money-row.bank { color: #3498db; }
+.money-row i { font-size: 16px; }
+
+#vehicle-hud {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.vehicle-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.speed-display {
+    text-align: center;
+}
+
+#speed-value {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.speed-unit {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+.fuel-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fuel-display i {
+    font-size: 16px;
+    color: #f39c12;
+}
+
+.fuel-track {
+    width: 80px;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.fuel-fill {
+    height: 100%;
+    background: linear-gradient(to right, #e74c3c, #f39c12, #2ecc71);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    width: 100%;
+}
+
+.voice-active { color: #2ecc71 !important; }
