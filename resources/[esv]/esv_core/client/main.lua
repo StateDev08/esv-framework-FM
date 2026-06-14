@@ -1,10 +1,8 @@
-ESV = ESV or {}
-ESV.PlayerData = {}
-ESV.IsReady = false
-ESV.CharacterLoaded = false
+-- ESV Core Client: Spawn-Handling und GTA-Feature-Management
+-- State-Sync (ESV.PlayerData, ESV.CharacterLoaded) wird ueber
+-- @esv_core/client/functions.lua in allen Resources gehandelt.
 
 CreateThread(function()
-    -- Spawnmanager: Auto-Spawn deaktivieren, manuell spawnen
     exports.spawnmanager:setAutoSpawn(false)
     exports.spawnmanager:spawnPlayer({
         x = -75.0,
@@ -14,7 +12,6 @@ CreateThread(function()
         model = 'mp_m_freemode_01',
         skipFade = false,
     }, function()
-        -- Spieler ist gespawnt, jetzt Server-Laden auslösen
         local ped = PlayerPedId()
         SetEntityVisible(ped, false, false)
         FreezeEntityPosition(ped, true)
@@ -23,17 +20,8 @@ CreateThread(function()
     end)
 end)
 
-RegisterNetEvent('esv:client:playerReady', function(playerId, adminLevel)
-    ESV.PlayerData.playerId = playerId
-    ESV.PlayerData.adminLevel = adminLevel
-    ESV.IsReady = true
-end)
-
+-- Charakter geladen: Spieler sichtbar machen und teleportieren
 RegisterNetEvent('esv:client:characterLoaded', function(charData, jobInfo)
-    ESV.PlayerData.character = charData
-    ESV.PlayerData.job = jobInfo
-    ESV.CharacterLoaded = true
-
     local ped = PlayerPedId()
     SetEntityVisible(ped, true, false)
     FreezeEntityPosition(ped, false)
@@ -63,22 +51,13 @@ RegisterNetEvent('esv:client:characterLoaded', function(charData, jobInfo)
     TriggerEvent('esv:client:spawnComplete')
 end)
 
+-- Geld-Update: lokales Event fuer andere Resources
 RegisterNetEvent('esv:client:updateMoney', function(moneyType, amount)
-    if not ESV.PlayerData.character then return end
-    ESV.PlayerData.character[moneyType] = amount
     TriggerEvent('esv:client:moneyChanged', moneyType, amount)
 end)
 
+-- Job-Update: lokales Event fuer andere Resources
 RegisterNetEvent('esv:client:jobUpdated', function(jobName, jobLabel, grade, gradeLabel)
-    if not ESV.PlayerData.character then return end
-    ESV.PlayerData.character.job = jobName
-    ESV.PlayerData.character.job_grade = grade
-    ESV.PlayerData.job = {
-        job = jobName,
-        jobLabel = jobLabel,
-        grade = grade,
-        gradeLabel = gradeLabel,
-    }
     TriggerEvent('esv:client:jobChanged', jobName, jobLabel, grade, gradeLabel)
 end)
 
@@ -87,18 +66,15 @@ CreateThread(function()
     while true do
         Wait(0)
         if ESV.CharacterLoaded then
-            DisableControlAction(0, 37, true)  -- Select Weapon (Tab)
+            DisableControlAction(0, 37, true)
             SetPedCanSwitchWeapon(PlayerPedId(), false)
 
-            -- Disable wanted level
             SetMaxWantedLevel(0)
             SetPlayerWantedLevel(PlayerId(), 0, false)
             SetPlayerWantedLevelNow(PlayerId(), false)
 
-            -- Disable health regen
             SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 
-            -- Disable ambient sounds
             if not IsPlayerSwitchInProgress() then
                 SetRadarBigmapEnabled(false, false)
             end
