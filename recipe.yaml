@@ -297,9 +297,17 @@ tasks:
       #  ESV Framework – FiveM Hardcore RP Server Configuration
       #  Erstellt durch TxAdmin Recipe
       # ============================================================
+      # Editable Settings
+      # -----------------
+      # You can edit the following:
+
+      endpoint_add_tcp "0.0.0.0:30120"
+      endpoint_add_udp "0.0.0.0:30120"
 
       # --- Server-Informationen ---
+      sv_licenseKey ""
       sv_hostname "ESV Hardcore RP | Dein Server"
+      load_server_icon Logo.png
       sv_projectName "ESV Hardcore RP"
       sv_projectDesc "Hardcore Roleplay Server powered by ESV Framework"
       sets sv_projectName "ESV Hardcore RP"
@@ -307,8 +315,12 @@ tasks:
       sets locale "de-DE"
       sets tags "roleplay, hardcore, deutsch, german, custom"
 
+      set resources_useSystemChat true
+      setr sv_stateBagStrictMode true
+
       # --- Netzwerk ---
-      sv_maxclients 64
+      sv_maxclients 48
+      sv_enforceGameBuild 3258
       sv_endpointPrivacy true
       sv_scriptHookAllowed 0
       load_server_icm_purpose 2
@@ -316,8 +328,13 @@ tasks:
       # --- MySQL-Verbindung ---
       set mysql_connection_string "{{dbConnectionString}}"
 
+      add_principal group.admin group.user
+      add_ace group.admin command allow
+      add_ace group.admin command.quit deny
+
       # --- OneSync ---
-      onesync on
+      ## onesync MUST only be set in the txAdmin settings page.
+      # onesync on
       set onesync_population true
 
       # --- Sicherheit ---
