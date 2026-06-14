@@ -188,7 +188,7 @@ ESV.Functions.RegisterServerCallback('esv:getCharacters', function(src, cb)
         local jobData = ESV.Jobs[char.job]
         char.jobLabel = jobData and jobData.label or "Arbeitslos"
         char.gradeLabel = jobData and jobData.grades[char.job_grade] and jobData.grades[char.job_grade].label or ""
-        result[char.slot] = char
+        result[tostring(char.slot)] = char
     end
 
     cb(result)

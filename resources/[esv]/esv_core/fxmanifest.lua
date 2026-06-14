@@ -16,8 +16,8 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/main.lua',
     'client/functions.lua',
+    'client/main.lua',
     'client/events.lua',
 }
 
@@ -32,6 +32,7 @@ server_scripts {
 lua54 'yes'
 
 dependencies {
+    'spawnmanager',
     'oxmysql',
     'ox_lib',
 }

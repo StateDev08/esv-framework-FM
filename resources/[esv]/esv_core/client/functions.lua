@@ -1,5 +1,47 @@
 ESV = ESV or {}
 ESV.Functions = ESV.Functions or {}
+ESV.PlayerData = ESV.PlayerData or {}
+ESV.IsReady = false
+ESV.CharacterLoaded = false
+
+-- ============================================================
+-- State-Sync: Diese Handler werden in JEDER Resource registriert
+-- die @esv_core/client/functions.lua laedt.
+-- Damit hat jede Resource ihren eigenen aktuellen State.
+-- ============================================================
+
+RegisterNetEvent('esv:client:playerReady', function(playerId, adminLevel)
+    ESV.PlayerData.playerId = playerId
+    ESV.PlayerData.adminLevel = adminLevel
+    ESV.IsReady = true
+end)
+
+RegisterNetEvent('esv:client:characterLoaded', function(charData, jobInfo)
+    ESV.PlayerData.character = charData
+    ESV.PlayerData.job = jobInfo
+    ESV.CharacterLoaded = true
+end)
+
+RegisterNetEvent('esv:client:updateMoney', function(moneyType, amount)
+    if not ESV.PlayerData.character then return end
+    ESV.PlayerData.character[moneyType] = amount
+end)
+
+RegisterNetEvent('esv:client:jobUpdated', function(jobName, jobLabel, grade, gradeLabel)
+    if not ESV.PlayerData.character then return end
+    ESV.PlayerData.character.job = jobName
+    ESV.PlayerData.character.job_grade = grade
+    ESV.PlayerData.job = {
+        job = jobName,
+        jobLabel = jobLabel,
+        grade = grade,
+        gradeLabel = gradeLabel,
+    }
+end)
+
+-- ============================================================
+-- Callback-System
+-- ============================================================
 
 local callbackId = 0
 local pendingCallbacks = {}
@@ -16,6 +58,10 @@ RegisterNetEvent('esv:client:callbackResponse', function(requestId, ...)
         pendingCallbacks[requestId] = nil
     end
 end)
+
+-- ============================================================
+-- Hilfsfunktionen
+-- ============================================================
 
 function ESV.Functions.DrawText3D(x, y, z, text)
     SetTextScale(0.35, 0.35)
@@ -162,4 +208,3 @@ exports('GetPlayerData', function() return ESV.PlayerData end)
 exports('IsCharacterLoaded', function() return ESV.CharacterLoaded end)
 exports('TriggerCallback', ESV.Functions.TriggerCallback)
 exports('GetClosestPlayer', ESV.Functions.GetClosestPlayer)
-exports('GetClosestVehicle', ESV.Functions.GetClosestVehicle)
