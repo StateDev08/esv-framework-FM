@@ -32,6 +32,7 @@ server_scripts {
 lua54 'yes'
 
 dependencies {
+    'spawnmanager',
     'oxmysql',
     'ox_lib',
 }

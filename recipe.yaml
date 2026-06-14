@@ -348,6 +348,7 @@ tasks:
       add_ace group.admin command.stop allow
 
       # --- Dependencies ---
+      ensure spawnmanager
       ensure oxmysql
       ensure ox_lib
 

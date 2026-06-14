@@ -3,9 +3,24 @@ ESV.PlayerData = {}
 ESV.IsReady = false
 ESV.CharacterLoaded = false
 
-AddEventHandler('onClientResourceStart', function(resourceName)
-    if GetCurrentResourceName() ~= resourceName then return end
-    TriggerServerEvent('esv:server:playerLoaded')
+CreateThread(function()
+    -- Spawnmanager: Auto-Spawn deaktivieren, manuell spawnen
+    exports.spawnmanager:setAutoSpawn(false)
+    exports.spawnmanager:spawnPlayer({
+        x = -75.0,
+        y = -819.0,
+        z = 326.0,
+        heading = 0.0,
+        model = 'mp_m_freemode_01',
+        skipFade = false,
+    }, function()
+        -- Spieler ist gespawnt, jetzt Server-Laden auslösen
+        local ped = PlayerPedId()
+        SetEntityVisible(ped, false, false)
+        FreezeEntityPosition(ped, true)
+
+        TriggerServerEvent('esv:server:playerLoaded')
+    end)
 end)
 
 RegisterNetEvent('esv:client:playerReady', function(playerId, adminLevel)
@@ -19,21 +34,25 @@ RegisterNetEvent('esv:client:characterLoaded', function(charData, jobInfo)
     ESV.PlayerData.job = jobInfo
     ESV.CharacterLoaded = true
 
+    local ped = PlayerPedId()
+    SetEntityVisible(ped, true, false)
+    FreezeEntityPosition(ped, false)
+
     local pos = charData.position
     if pos then
-        SetEntityCoords(PlayerPedId(), pos.x, pos.y, pos.z, false, false, false, false)
-        SetEntityHeading(PlayerPedId(), pos.h or 0.0)
+        SetEntityCoords(ped, pos.x, pos.y, pos.z, false, false, false, false)
+        SetEntityHeading(ped, pos.h or 0.0)
     else
         local spawn = ESV.Config.DefaultSpawn
-        SetEntityCoords(PlayerPedId(), spawn.x, spawn.y, spawn.z, false, false, false, false)
-        SetEntityHeading(PlayerPedId(), spawn.w)
+        SetEntityCoords(ped, spawn.x, spawn.y, spawn.z, false, false, false, false)
+        SetEntityHeading(ped, spawn.w)
     end
 
     if charData.health then
-        SetEntityHealth(PlayerPedId(), charData.health)
+        SetEntityHealth(ped, charData.health)
     end
     if charData.armor then
-        SetPedArmour(PlayerPedId(), charData.armor)
+        SetPedArmour(ped, charData.armor)
     end
 
     if charData.skin then
