@@ -1,0 +1,189 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: transparent;
+    overflow: hidden;
+    color: #fff;
+}
+
+.hidden { display: none !important; }
+
+#inventory-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+}
+
+.inventory-panel {
+    background: rgba(15, 15, 25, 0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    width: 700px;
+    max-height: 80vh;
+    backdrop-filter: blur(20px);
+}
+
+.inv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.inv-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.inv-title i { color: #e74c3c; }
+.player-name { color: #888; font-size: 14px; }
+
+.inv-weight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 14px;
+}
+.inv-weight i { color: #f39c12; }
+
+.close-btn {
+    background: rgba(231, 76, 60, 0.2);
+    border: none;
+    color: #e74c3c;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.close-btn:hover { background: rgba(231, 76, 60, 0.4); }
+
+.inv-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+    padding: 12px;
+    max-height: calc(80vh - 60px);
+    overflow-y: auto;
+}
+
+.inv-slot {
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    min-height: 70px;
+}
+
+.inv-slot:hover {
+    border-color: rgba(231, 76, 60, 0.4);
+    background: rgba(255,255,255,0.06);
+}
+
+.inv-slot.has-item {
+    border-color: rgba(255,255,255,0.1);
+}
+
+.inv-slot .item-icon {
+    font-size: 22px;
+    color: #ccc;
+    margin-bottom: 2px;
+}
+
+.inv-slot .item-label {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    line-height: 1.1;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.inv-slot .item-amount {
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(231, 76, 60, 0.6);
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
+#context-menu {
+    position: fixed;
+    background: rgba(15, 15, 25, 0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 4px;
+    min-width: 160px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+#context-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    color: #ccc;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+}
+
+#context-menu button:hover {
+    background: rgba(231, 76, 60, 0.2);
+    color: #fff;
+}
+
+#context-menu button i {
+    width: 20px;
+    text-align: center;
+    color: #e74c3c;
+}
+
+#item-tooltip {
+    position: fixed;
+    background: rgba(10, 10, 20, 0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-width: 180px;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.tooltip-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.tooltip-desc { font-size: 13px; color: #888; margin-bottom: 6px; }
+.tooltip-weight { font-size: 12px; color: #f39c12; }
+
+.inv-grid::-webkit-scrollbar { width: 4px; }
+.inv-grid::-webkit-scrollbar-track { background: transparent; }
+.inv-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }

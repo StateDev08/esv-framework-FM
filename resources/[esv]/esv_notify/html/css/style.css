@@ -1,0 +1,83 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: transparent;
+    overflow: hidden;
+}
+
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+    max-width: 380px;
+}
+
+.notification {
+    padding: 14px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+}
+
+.notification.removing {
+    animation: slideOut 0.3s ease forwards;
+}
+
+.notification i {
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.notification.success {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.9), rgba(39, 174, 96, 0.9));
+    border-left: 4px solid #27ae60;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9));
+    border-left: 4px solid #c0392b;
+}
+
+.notification.info {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9));
+    border-left: 4px solid #2980b9;
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.9), rgba(211, 84, 0, 0.9));
+    border-left: 4px solid #d35400;
+}
+
+.notification.police {
+    background: linear-gradient(135deg, rgba(41, 128, 185, 0.9), rgba(44, 62, 80, 0.9));
+    border-left: 4px solid #2c3e50;
+}
+
+.notification.ems {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9));
+    border-left: 4px solid #e74c3c;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}

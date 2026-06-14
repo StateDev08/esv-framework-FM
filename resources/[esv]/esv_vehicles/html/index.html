@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ESV Fahrzeuge</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="garage-container" class="hidden">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fas fa-warehouse"></i> <span id="garage-title">GARAGE</span></div>
+                <button class="close-btn" onclick="closeGarage()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="vehicle-list" id="vehicle-list"></div>
+            <div class="panel-footer">
+                <button class="btn btn-store" onclick="storeVehicle()"><i class="fas fa-arrow-down"></i> EINPARKEN</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dealer-container" class="hidden">
+        <div class="panel dealer-panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fas fa-car"></i> <span id="dealer-title">AUTOHAUS</span></div>
+                <button class="close-btn" onclick="closeDealership()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="category-tabs" id="category-tabs"></div>
+            <div class="vehicle-list" id="dealer-list"></div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

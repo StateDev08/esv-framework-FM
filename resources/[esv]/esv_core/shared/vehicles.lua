@@ -1,0 +1,138 @@
+ESV = ESV or {}
+ESV.Vehicles = {}
+
+ESV.Vehicles = {
+    -- Kompaktwagen
+    { model = "blista",     label = "Blista",         price = 15000,  category = "kompakt",   shop = "standard" },
+    { model = "brioso",     label = "Brioso R/A",     price = 18000,  category = "kompakt",   shop = "standard" },
+    { model = "dilettante", label = "Dilettante",     price = 12000,  category = "kompakt",   shop = "standard" },
+    { model = "issi2",      label = "Issi",           price = 10000,  category = "kompakt",   shop = "standard" },
+    { model = "panto",      label = "Panto",          price = 8000,   category = "kompakt",   shop = "standard" },
+    { model = "prairie",    label = "Prairie",        price = 14000,  category = "kompakt",   shop = "standard" },
+    { model = "rhapsody",   label = "Rhapsody",       price = 11000,  category = "kompakt",   shop = "standard" },
+
+    -- Limousinen
+    { model = "asea",       label = "Asea",           price = 20000,  category = "limousine", shop = "standard" },
+    { model = "emperor",    label = "Emperor",        price = 22000,  category = "limousine", shop = "standard" },
+    { model = "fugitive",   label = "Fugitive",       price = 28000,  category = "limousine", shop = "standard" },
+    { model = "glendale",   label = "Glendale",       price = 25000,  category = "limousine", shop = "standard" },
+    { model = "ingot",      label = "Ingot",          price = 18000,  category = "limousine", shop = "standard" },
+    { model = "intruder",   label = "Intruder",       price = 26000,  category = "limousine", shop = "standard" },
+    { model = "premier",    label = "Premier",        price = 24000,  category = "limousine", shop = "standard" },
+    { model = "primo",      label = "Primo",          price = 22000,  category = "limousine", shop = "standard" },
+    { model = "schafter2",  label = "Schafter",       price = 45000,  category = "limousine", shop = "standard" },
+    { model = "stanier",    label = "Stanier",        price = 20000,  category = "limousine", shop = "standard" },
+    { model = "stratum",    label = "Stratum",        price = 23000,  category = "limousine", shop = "standard" },
+    { model = "surge",      label = "Surge",          price = 30000,  category = "limousine", shop = "standard" },
+    { model = "tailgater",  label = "Tailgater",      price = 35000,  category = "limousine", shop = "standard" },
+    { model = "warrener",   label = "Warrener",       price = 19000,  category = "limousine", shop = "standard" },
+    { model = "washington", label = "Washington",     price = 28000,  category = "limousine", shop = "standard" },
+
+    -- Coupes
+    { model = "cogcabrio",  label = "Cognoscenti Cabrio", price = 65000, category = "coupe", shop = "standard" },
+    { model = "exemplar",   label = "Exemplar",       price = 55000,  category = "coupe",     shop = "standard" },
+    { model = "f620",       label = "F620",           price = 50000,  category = "coupe",     shop = "standard" },
+    { model = "felon",      label = "Felon",          price = 48000,  category = "coupe",     shop = "standard" },
+    { model = "felon2",     label = "Felon GT",       price = 52000,  category = "coupe",     shop = "standard" },
+    { model = "jackal",     label = "Jackal",         price = 46000,  category = "coupe",     shop = "standard" },
+    { model = "oracle",     label = "Oracle",         price = 42000,  category = "coupe",     shop = "standard" },
+    { model = "oracle2",    label = "Oracle XS",      price = 47000,  category = "coupe",     shop = "standard" },
+    { model = "sentinel",   label = "Sentinel",       price = 40000,  category = "coupe",     shop = "standard" },
+    { model = "sentinel2",  label = "Sentinel XS",    price = 45000,  category = "coupe",     shop = "standard" },
+    { model = "windsor",    label = "Windsor",        price = 70000,  category = "coupe",     shop = "standard" },
+    { model = "zion",       label = "Zion",           price = 38000,  category = "coupe",     shop = "standard" },
+
+    -- Sportwagen
+    { model = "alpha",      label = "Alpha",          price = 120000, category = "sport",     shop = "premium" },
+    { model = "banshee",    label = "Banshee",        price = 100000, category = "sport",     shop = "premium" },
+    { model = "buffalo",    label = "Buffalo",        price = 75000,  category = "sport",     shop = "standard" },
+    { model = "buffalo2",   label = "Buffalo S",      price = 85000,  category = "sport",     shop = "standard" },
+    { model = "carbonizzare", label = "Carbonizzare", price = 140000, category = "sport",     shop = "premium" },
+    { model = "comet2",     label = "Comet",          price = 110000, category = "sport",     shop = "premium" },
+    { model = "coquette",   label = "Coquette",       price = 130000, category = "sport",     shop = "premium" },
+    { model = "elegy2",     label = "Elegy RH8",      price = 95000,  category = "sport",     shop = "premium" },
+    { model = "feltzer2",   label = "Feltzer",        price = 115000, category = "sport",     shop = "premium" },
+    { model = "fusilade",   label = "Fusilade",       price = 70000,  category = "sport",     shop = "standard" },
+    { model = "futo",       label = "Futo",           price = 35000,  category = "sport",     shop = "standard" },
+    { model = "jester",     label = "Jester",         price = 125000, category = "sport",     shop = "premium" },
+    { model = "kuruma",     label = "Kuruma",         price = 65000,  category = "sport",     shop = "standard" },
+    { model = "massacro",   label = "Massacro",       price = 135000, category = "sport",     shop = "premium" },
+    { model = "penumbra",   label = "Penumbra",       price = 55000,  category = "sport",     shop = "standard" },
+    { model = "rapidgt",    label = "Rapid GT",       price = 90000,  category = "sport",     shop = "premium" },
+    { model = "sultan",     label = "Sultan",         price = 45000,  category = "sport",     shop = "standard" },
+    { model = "surano",     label = "Surano",         price = 100000, category = "sport",     shop = "premium" },
+
+    -- Supersportwagen
+    { model = "adder",      label = "Adder",          price = 1000000, category = "super",   shop = "luxury" },
+    { model = "bullet",     label = "Bullet",         price = 450000,  category = "super",   shop = "luxury" },
+    { model = "cheetah",    label = "Cheetah",        price = 600000,  category = "super",   shop = "luxury" },
+    { model = "entityxf",   label = "Entity XF",      price = 800000,  category = "super",   shop = "luxury" },
+    { model = "infernus",   label = "Infernus",       price = 550000,  category = "super",   shop = "luxury" },
+    { model = "osiris",     label = "Osiris",         price = 900000,  category = "super",   shop = "luxury" },
+    { model = "t20",        label = "T20",            price = 1200000, category = "super",   shop = "luxury" },
+    { model = "turismor",   label = "Turismo R",      price = 700000,  category = "super",   shop = "luxury" },
+    { model = "vacca",      label = "Vacca",          price = 500000,  category = "super",   shop = "luxury" },
+    { model = "voltic",     label = "Voltic",         price = 400000,  category = "super",   shop = "luxury" },
+    { model = "zentorno",   label = "Zentorno",       price = 750000,  category = "super",   shop = "luxury" },
+
+    -- SUVs
+    { model = "baller",     label = "Baller",         price = 55000,  category = "suv",      shop = "standard" },
+    { model = "baller2",    label = "Baller LE",      price = 65000,  category = "suv",      shop = "standard" },
+    { model = "cavalcade",  label = "Cavalcade",      price = 50000,  category = "suv",      shop = "standard" },
+    { model = "dubsta",     label = "Dubsta",         price = 48000,  category = "suv",      shop = "standard" },
+    { model = "fq2",        label = "FQ 2",           price = 35000,  category = "suv",      shop = "standard" },
+    { model = "granger",    label = "Granger",        price = 45000,  category = "suv",      shop = "standard" },
+    { model = "gresley",    label = "Gresley",        price = 42000,  category = "suv",      shop = "standard" },
+    { model = "habanero",   label = "Habanero",       price = 38000,  category = "suv",      shop = "standard" },
+    { model = "huntley",    label = "Huntley S",      price = 60000,  category = "suv",      shop = "standard" },
+    { model = "landstalker",label = "Landstalker",    price = 40000,  category = "suv",      shop = "standard" },
+    { model = "mesa",       label = "Mesa",           price = 32000,  category = "suv",      shop = "standard" },
+    { model = "patriot",    label = "Patriot",        price = 55000,  category = "suv",      shop = "standard" },
+    { model = "radi",       label = "Radius",         price = 36000,  category = "suv",      shop = "standard" },
+    { model = "rocoto",     label = "Rocoto",         price = 46000,  category = "suv",      shop = "standard" },
+    { model = "seminole",   label = "Seminole",       price = 34000,  category = "suv",      shop = "standard" },
+    { model = "xls",        label = "XLS",            price = 58000,  category = "suv",      shop = "standard" },
+
+    -- Motorraeder
+    { model = "akuma",      label = "Akuma",          price = 25000,  category = "motorrad", shop = "standard" },
+    { model = "bagger",     label = "Bagger",         price = 18000,  category = "motorrad", shop = "standard" },
+    { model = "bati",       label = "Bati 801",       price = 30000,  category = "motorrad", shop = "standard" },
+    { model = "bati2",      label = "Bati 801RR",     price = 35000,  category = "motorrad", shop = "standard" },
+    { model = "carbonrs",   label = "Carbon RS",      price = 40000,  category = "motorrad", shop = "standard" },
+    { model = "daemon",     label = "Daemon",         price = 15000,  category = "motorrad", shop = "standard" },
+    { model = "double",     label = "Double T",       price = 28000,  category = "motorrad", shop = "standard" },
+    { model = "enduro",     label = "Enduro",         price = 22000,  category = "motorrad", shop = "standard" },
+    { model = "faggio2",    label = "Faggio",         price = 5000,   category = "motorrad", shop = "standard" },
+    { model = "hakuchou",   label = "Hakuchou",       price = 55000,  category = "motorrad", shop = "premium" },
+    { model = "hexer",      label = "Hexer",          price = 16000,  category = "motorrad", shop = "standard" },
+    { model = "nemesis",    label = "Nemesis",        price = 20000,  category = "motorrad", shop = "standard" },
+    { model = "pcj",        label = "PCJ 600",        price = 24000,  category = "motorrad", shop = "standard" },
+    { model = "ruffian",    label = "Ruffian",        price = 18000,  category = "motorrad", shop = "standard" },
+    { model = "sanchez",    label = "Sanchez",        price = 12000,  category = "motorrad", shop = "standard" },
+    { model = "thrust",     label = "Thrust",         price = 45000,  category = "motorrad", shop = "premium" },
+
+    -- Transporter / Vans
+    { model = "bison",      label = "Bison",          price = 28000,  category = "transporter", shop = "standard" },
+    { model = "bobcatxl",   label = "Bobcat XL",      price = 25000,  category = "transporter", shop = "standard" },
+    { model = "burrito3",   label = "Burrito",        price = 20000,  category = "transporter", shop = "standard" },
+    { model = "gburrito",   label = "Gang Burrito",   price = 22000,  category = "transporter", shop = "standard" },
+    { model = "minivan",    label = "Minivan",        price = 18000,  category = "transporter", shop = "standard" },
+    { model = "paradise",   label = "Paradise",       price = 15000,  category = "transporter", shop = "standard" },
+    { model = "rumpo",      label = "Rumpo",          price = 23000,  category = "transporter", shop = "standard" },
+    { model = "speedo",     label = "Speedo",         price = 20000,  category = "transporter", shop = "standard" },
+    { model = "youga",      label = "Youga",          price = 17000,  category = "transporter", shop = "standard" },
+}
+
+-- Fahrzeug-Kategorien
+ESV.VehicleCategories = {
+    kompakt     = { label = "Kompaktwagen",    icon = "fa-car" },
+    limousine   = { label = "Limousinen",      icon = "fa-car-side" },
+    coupe       = { label = "Coupes",          icon = "fa-car" },
+    sport       = { label = "Sportwagen",      icon = "fa-car-alt" },
+    super       = { label = "Supersportwagen", icon = "fa-car" },
+    suv         = { label = "SUVs",            icon = "fa-truck" },
+    motorrad    = { label = "Motorraeder",     icon = "fa-motorcycle" },
+    transporter = { label = "Transporter",     icon = "fa-shuttle-van" },
+}
+
+return ESV.Vehicles

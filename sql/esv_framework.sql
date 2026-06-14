@@ -1,0 +1,262 @@
+-- ============================================================
+--  ESV Framework – Datenbank-Schema
+--  Hardcore RP FiveM Framework
+-- ============================================================
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- -----------------------------------------------------------
+--  Spieler (Accounts)
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `players` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `license` VARCHAR(64) NOT NULL UNIQUE,
+  `steam` VARCHAR(64) DEFAULT NULL,
+  `discord` VARCHAR(64) DEFAULT NULL,
+  `ip` VARCHAR(64) DEFAULT NULL,
+  `admin_level` INT DEFAULT 0,
+  `banned` TINYINT(1) DEFAULT 0,
+  `ban_reason` TEXT DEFAULT NULL,
+  `ban_expire` DATETIME DEFAULT NULL,
+  `last_login` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_license` (`license`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Charaktere
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `characters` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `player_id` INT NOT NULL,
+  `slot` INT NOT NULL DEFAULT 1,
+  `firstname` VARCHAR(50) NOT NULL,
+  `lastname` VARCHAR(50) NOT NULL,
+  `dateofbirth` VARCHAR(20) DEFAULT '01.01.2000',
+  `gender` INT DEFAULT 0,
+  `nationality` VARCHAR(50) DEFAULT 'Deutschland',
+  `phone_number` VARCHAR(20) DEFAULT NULL,
+  `cash` INT DEFAULT 5000,
+  `bank` INT DEFAULT 10000,
+  `job` VARCHAR(50) DEFAULT 'arbeitslos',
+  `job_grade` INT DEFAULT 0,
+  `position` TEXT DEFAULT NULL,
+  `skin` LONGTEXT DEFAULT NULL,
+  `health` INT DEFAULT 200,
+  `armor` INT DEFAULT 0,
+  `hunger` FLOAT DEFAULT 100.0,
+  `thirst` FLOAT DEFAULT 100.0,
+  `stress` FLOAT DEFAULT 0.0,
+  `is_dead` TINYINT(1) DEFAULT 0,
+  `jail_time` INT DEFAULT 0,
+  `last_played` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY `unique_slot` (`player_id`, `slot`),
+  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE,
+  INDEX `idx_player` (`player_id`),
+  INDEX `idx_job` (`job`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Inventar
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `inventories` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `owner` VARCHAR(64) NOT NULL,
+  `owner_type` ENUM('player','trunk','glovebox','stash','drop') DEFAULT 'player',
+  `item_name` VARCHAR(100) NOT NULL,
+  `amount` INT DEFAULT 1,
+  `metadata` LONGTEXT DEFAULT NULL,
+  `slot` INT DEFAULT 1,
+  `weight` FLOAT DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_owner` (`owner`, `owner_type`),
+  INDEX `idx_item` (`item_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Bankkonten & Transaktionen
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bank_accounts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `character_id` INT NOT NULL,
+  `account_number` VARCHAR(20) NOT NULL UNIQUE,
+  `balance` BIGINT DEFAULT 0,
+  `account_type` ENUM('personal','business','savings') DEFAULT 'personal',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
+  INDEX `idx_char` (`character_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `bank_transactions` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `account_id` INT NOT NULL,
+  `type` ENUM('deposit','withdraw','transfer_in','transfer_out','salary','purchase','fine') NOT NULL,
+  `amount` BIGINT NOT NULL,
+  `description` VARCHAR(255) DEFAULT '',
+  `balance_after` BIGINT DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`account_id`) REFERENCES `bank_accounts`(`id`) ON DELETE CASCADE,
+  INDEX `idx_account` (`account_id`),
+  INDEX `idx_date` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Fahrzeuge
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vehicles` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `character_id` INT NOT NULL,
+  `plate` VARCHAR(12) NOT NULL UNIQUE,
+  `model` VARCHAR(50) NOT NULL,
+  `vehicle_data` LONGTEXT DEFAULT NULL,
+  `fuel` FLOAT DEFAULT 100.0,
+  `body_health` FLOAT DEFAULT 1000.0,
+  `engine_health` FLOAT DEFAULT 1000.0,
+  `garage` VARCHAR(50) DEFAULT 'hauptgarage',
+  `state` ENUM('parked','out','impound') DEFAULT 'parked',
+  `mods` LONGTEXT DEFAULT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE,
+  INDEX `idx_char` (`character_id`),
+  INDEX `idx_plate` (`plate`),
+  INDEX `idx_garage` (`garage`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Fahrzeugschluessel
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vehicle_keys` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `plate` VARCHAR(12) NOT NULL,
+  `character_id` INT NOT NULL,
+  `is_owner` TINYINT(1) DEFAULT 0,
+  UNIQUE KEY `unique_key` (`plate`, `character_id`),
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Wohnungen / Properties
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `properties` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL,
+  `label` VARCHAR(100) NOT NULL,
+  `owner_id` INT DEFAULT NULL,
+  `price` INT DEFAULT 0,
+  `interior` VARCHAR(50) DEFAULT 'standard',
+  `position` TEXT NOT NULL,
+  `stash_size` INT DEFAULT 50,
+  `is_locked` TINYINT(1) DEFAULT 1,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`owner_id`) REFERENCES `characters`(`id`) ON DELETE SET NULL,
+  INDEX `idx_owner` (`owner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Telefon: Kontakte
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `phone_contacts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `character_id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `number` VARCHAR(20) NOT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Telefon: Nachrichten
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `phone_messages` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `sender_number` VARCHAR(20) NOT NULL,
+  `receiver_number` VARCHAR(20) NOT NULL,
+  `message` TEXT NOT NULL,
+  `is_read` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_receiver` (`receiver_number`),
+  INDEX `idx_sender` (`sender_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Telefon: Anrufliste
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `phone_calls` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `caller_number` VARCHAR(20) NOT NULL,
+  `receiver_number` VARCHAR(20) NOT NULL,
+  `duration` INT DEFAULT 0,
+  `accepted` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Bußgelder / Rechnungen
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `billing` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `character_id` INT NOT NULL,
+  `sender` VARCHAR(100) NOT NULL,
+  `amount` INT NOT NULL,
+  `reason` VARCHAR(255) DEFAULT '',
+  `paid` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Dispatch / 911 Meldungen
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dispatch_calls` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `caller_id` INT DEFAULT NULL,
+  `type` ENUM('police','ems','fire','mechanic') DEFAULT 'police',
+  `message` TEXT NOT NULL,
+  `location` TEXT DEFAULT NULL,
+  `status` ENUM('open','assigned','closed') DEFAULT 'open',
+  `assigned_to` INT DEFAULT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Strafregister
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `criminal_records` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `character_id` INT NOT NULL,
+  `officer_id` INT DEFAULT NULL,
+  `charge` VARCHAR(255) NOT NULL,
+  `fine` INT DEFAULT 0,
+  `jail_time` INT DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`character_id`) REFERENCES `characters`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Drogenfelder
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `drug_fields` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `owner_id` INT DEFAULT NULL,
+  `type` VARCHAR(50) NOT NULL,
+  `position` TEXT NOT NULL,
+  `stage` INT DEFAULT 0,
+  `last_harvest` DATETIME DEFAULT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -----------------------------------------------------------
+--  Admin-Logs
+-- -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admin_logs` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `admin_id` INT DEFAULT NULL,
+  `action` VARCHAR(100) NOT NULL,
+  `target` VARCHAR(100) DEFAULT NULL,
+  `details` TEXT DEFAULT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+SET FOREIGN_KEY_CHECKS = 1;
