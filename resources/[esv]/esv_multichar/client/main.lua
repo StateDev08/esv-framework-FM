@@ -1,6 +1,5 @@
 local isOpen = false
 local charCam = nil
-local charPed = nil
 
 RegisterNetEvent('esv:client:playerReady', function()
     Wait(500)
@@ -14,6 +13,10 @@ function OpenMultichar()
     DoScreenFadeOut(500)
     Wait(600)
 
+    -- Ladebildschirm beenden
+    ShutdownLoadingScreen()
+    ShutdownLoadingScreenNui()
+
     SetNuiFocus(true, true)
 
     -- Kamera einrichten
@@ -24,12 +27,6 @@ function OpenMultichar()
     SetCamFov(charCam, 45.0)
     SetCamActive(charCam, true)
     RenderScriptCams(true, false, 0, true, true)
-
-    -- Spieler verstecken
-    local ped = PlayerPedId()
-    SetEntityVisible(ped, false, false)
-    FreezeEntityPosition(ped, true)
-    SetEntityCoords(ped, camPos.x, camPos.y, camPos.z - 10.0, false, false, false, false)
 
     -- Charaktere laden
     ESV.Functions.TriggerCallback('esv:getCharacters', function(characters)
@@ -51,10 +48,6 @@ function CloseMultichar()
         DestroyCam(charCam, false)
         charCam = nil
     end
-
-    local ped = PlayerPedId()
-    SetEntityVisible(ped, true, false)
-    FreezeEntityPosition(ped, false)
 
     SendNUIMessage({ action = 'closeMultichar' })
 end
@@ -90,7 +83,6 @@ RegisterNUICallback('closeMultichar', function(data, cb)
 end)
 
 RegisterNetEvent('esv:client:characterCreated', function(charId, slot)
-    -- Charaktere neu laden
     ESV.Functions.TriggerCallback('esv:getCharacters', function(characters)
         SendNUIMessage({
             action = 'openMultichar',
