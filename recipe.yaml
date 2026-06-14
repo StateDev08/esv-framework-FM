@@ -1,13 +1,47 @@
-$meta:
-  name: ESV Framework – Hardcore RP
-  version: 1.0.0
-  author: ESV Development
-  description: >-
-    Vollstaendiges FiveM Hardcore RP Framework mit 20 Resources.
-    Beinhaltet Multi-Charakter, Inventar, Banking, Jobs (Polizei/EMS/Mechaniker),
-    Fahrzeuge, Telefon, Kriminalitaet, Admin-System und vieles mehr.
+$engine: 3
+$onesync: on
+
+name: ESV Framework – Hardcore RP
+version: 1.0.0
+author: ESV Development
+description: >-
+  Vollstaendiges FiveM Hardcore RP Framework mit 20 Resources.
+  Beinhaltet Multi-Charakter, Inventar, Banking, Jobs (Polizei/EMS/Mechaniker),
+  Fahrzeuge, Telefon, Kriminalitaet, Admin-System und vieles mehr.
 
 tasks:
+  ##
+  ## ESV Framework herunterladen
+  ##
+  - action: download_github
+    src: https://github.com/StateDev08/esv-framework-FM
+    ref: init-branch
+    dest: ./tmp/esv
+
+  - action: move_path
+    src: ./tmp/esv/resources/[esv]
+    dest: ./resources/[esv]
+
+  ##
+  ## Dependencies herunterladen
+  ##
+
+  # oxmysql
+  - action: download_file
+    url: https://github.com/overextended/oxmysql/releases/latest/download/oxmysql.zip
+    path: ./tmp/oxmysql.zip
+  - action: unzip
+    src: ./tmp/oxmysql.zip
+    dest: ./resources/[deps]/oxmysql
+
+  # ox_lib
+  - action: download_file
+    url: https://github.com/overextended/ox_lib/releases/latest/download/ox_lib.zip
+    path: ./tmp/ox_lib.zip
+  - action: unzip
+    src: ./tmp/ox_lib.zip
+    dest: ./resources/[deps]/ox_lib
+
   ##
   ## Datenbank einrichten
   ##
@@ -254,34 +288,11 @@ tasks:
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
   ##
-  ## Dependencies herunterladen
-  ##
-
-  # oxmysql
-  - action: download_github
-    src: https://github.com/overextended/oxmysql/releases/latest/download/oxmysql.zip
-    dest: ./resources/[deps]/oxmysql
-
-  # ox_lib
-  - action: download_github
-    src: https://github.com/overextended/ox_lib/releases/latest/download/ox_lib.zip
-    dest: ./resources/[deps]/ox_lib
-
-  ##
-  ## ESV Framework herunterladen
-  ##
-  - action: download_github
-    src: https://github.com/StateDev08/esv-framework-FM
-    dest: ./resources/[esv]
-    subpath: resources/[esv]
-    ref: init-branch
-
-  ##
   ## server.cfg erstellen
   ##
   - action: write_file
-    path: server.cfg
-    content: |
+    file: ./server.cfg
+    data: |
       # ============================================================
       #  ESV Framework – FiveM Hardcore RP Server Configuration
       #  Erstellt durch TxAdmin Recipe
@@ -344,3 +355,9 @@ tasks:
       ensure esv_emotes
       ensure esv_scoreboard
       ensure esv_loading
+
+  ##
+  ## Temporaere Dateien aufraeumen
+  ##
+  - action: remove_path
+    path: ./tmp
